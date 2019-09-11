@@ -1,0 +1,15 @@
+{
+    "name": "talentui33/active-campaign",
+    "description": "Integration and Consuming API of ActiveCampaign",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Talentui33",
+            "email": "oscar@talentu.co"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "orchestra/testbench": "^4.0"
+    }
+}
