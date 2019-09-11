@@ -11,5 +11,15 @@
     "require": {},
     "require-dev": {
         "orchestra/testbench": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "talentui33\\ActiveCampaign": "src" 
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "talentui33\\ActiveCampaign\\Tests": "tests" 
+        }
     }
 }
