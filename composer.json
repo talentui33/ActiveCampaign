@@ -1,25 +1,48 @@
 {
     "name": "talentui33/active-campaign",
-    "description": "Integration and Consuming API of ActiveCampaign",
+    "description": "Integration and API Consuming for ActiveCampaign",
+    "keywords": [
+        "laravel",
+        "activecampaign",
+        "api"
+    ],
     "license": "MIT",
     "authors": [
         {
             "name": "Talentui33",
             "email": "oscar@talentu.co"
+        },
+        {
+            "name": "Kevin Cifuentes",
+            "email": "cifuenteskevin85@gmail.com",
+            "role": "Developer"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=7.1",
+        "activecampaign/api-php": "^2.0.3"
+    },
     "require-dev": {
         "orchestra/testbench": "^4.0"
     },
     "autoload": {
         "psr-4": {
-            "talentui33\\ActiveCampaign": "src" 
+            "talentui33\\ActiveCampaign\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "talentui33\\ActiveCampaign\\Tests": "tests" 
+            "talentui33\\ActiveCampaign\\Tests\\": "tests"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "talentui33\\ActiveCampaign\\ServiceProvider"
+            ],
+            "aliases": {}
         }
     }
 }
