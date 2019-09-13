@@ -15,14 +15,18 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__.'/config/active-campaign.php' => config_path('active-campaign.php'),
+            __DIR__.'/config/activecampaign.php' => config_path('activecampaign.php'),
         ], 'config');
     }
 
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/config/active-campaign.php', 'active-campaign'
+            __DIR__.'/config/activecampaign.php', 'activecampaign'
         );
+
+        $this->app->bind('activecampaign', function ($app) {
+            return new ActiveCampaign();
+        });
     }
 }

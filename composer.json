@@ -20,7 +20,8 @@
     ],
     "require": {
         "php": ">=7.1",
-        "activecampaign/api-php": "^2.0.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "ext-json": "*"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0"
@@ -42,7 +43,9 @@
             "providers": [
                 "talentui33\\ActiveCampaign\\ServiceProvider"
             ],
-            "aliases": {}
+            "aliases": {
+                "ActiveCampaign": "talentui33\\ActiveCampaign\\Facade"
+            }
         }
     }
 }
