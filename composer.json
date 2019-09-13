@@ -48,5 +48,10 @@
                 "ActiveCampaign": "talentui33\\ActiveCampaign\\Facade"
             }
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php -r \"file_exists('tests/TestCase.php') || copy('tests/TestCase.example.php', 'tests/TestCase.php');\""
+        ]
     }
 }
