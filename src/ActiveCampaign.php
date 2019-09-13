@@ -1,10 +1,8 @@
 <?php
 
 
-namespace talentui33\ActiveCampaign;
+namespace TalentuI33\ActiveCampaign;
 
-
-use Carbon\Traits\Mutability;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 

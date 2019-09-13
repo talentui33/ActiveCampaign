@@ -1,6 +1,6 @@
 <?php
 
-namespace talentui33\ActiveCampaign\Tests;
+namespace Tests;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
 

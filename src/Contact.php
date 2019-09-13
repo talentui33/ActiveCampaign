@@ -1,7 +1,6 @@
 <?php
 
-namespace talentui33\ActiveCampaign;
-
+namespace TalentuI33\ActiveCampaign;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;

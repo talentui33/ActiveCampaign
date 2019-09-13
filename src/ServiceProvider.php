@@ -1,6 +1,6 @@
 <?php
 
-namespace talentui33\ActiveCampaign;
+namespace TalentuI33\ActiveCampaign;
 
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider

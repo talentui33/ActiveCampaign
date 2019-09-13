@@ -1,7 +1,7 @@
 <?php
 
 
-namespace talentui33\ActiveCampaign;
+namespace TalentuI33\ActiveCampaign;
 
 class Facade extends \Illuminate\Support\Facades\Facade
 {

@@ -1,8 +1,9 @@
 <?php
 
-namespace talentui33\ActiveCampaign\Tests;
+namespace Tests\Unit;
 
-use talentui33\ActiveCampaign\ActiveCampaign;
+use TalentuI33\ActiveCampaign\ActiveCampaign;
+use Tests\TestCase;
 
 class InitialTest extends TestCase
 {

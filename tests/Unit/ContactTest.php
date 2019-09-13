@@ -1,10 +1,10 @@
 <?php
 
 
-namespace talentui33\ActiveCampaign\Tests\Unit;
+namespace Tests\Unit;
 
-use talentui33\ActiveCampaign\Contact;
-use talentui33\ActiveCampaign\Tests\TestCase;
+use TalentuI33\ActiveCampaign\Contact;
+use Tests\TestCase;
 
 class ContactTest extends TestCase
 {

@@ -28,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "talentui33\\ActiveCampaign\\": "src"
+            "TalentuI33\\ActiveCampaign\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "talentui33\\ActiveCampaign\\Tests\\": "tests"
+            "Tests\\": "tests"
         }
     },
     "minimum-stability": "dev",
