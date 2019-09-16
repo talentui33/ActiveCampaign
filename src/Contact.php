@@ -84,7 +84,7 @@ class Contact extends ActiveCampaign
         return $response;
     }
 
-    public static function delete(string $id)
+    public static function delete(string $id): Response
     {
         $response = null;
         try {
