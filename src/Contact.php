@@ -20,7 +20,7 @@ class Contact extends ActiveCampaign
         parent::__construct();
     }
 
-    public static function add(string $first_name, string $last_name, string $email, string $phone): Response
+    public static function add(string $firstName, string $lastName, string $email, string $phone): Response
     {
         $response = null;
         try {
@@ -32,8 +32,8 @@ class Contact extends ActiveCampaign
                 'json' => [
                     "contact" => [
                         "email" => $email,
-                        "firstName" => $first_name,
-                        "lastName" => $last_name,
+                        "firstName" => $firstName,
+                        "lastName" => $lastName,
                         "phone" => $phone
                     ]
                 ]
@@ -45,7 +45,7 @@ class Contact extends ActiveCampaign
         return $response;
     }
 
-    public static function update(string $id, string $first_name = null, string $last_name = null, string $email = null, string $phone = null): Response
+    public static function update(string $id, string $firstName = null, string $lastName = null, string $email = null, string $phone = null): Response
     {
         $response = null;
 
@@ -56,12 +56,12 @@ class Contact extends ActiveCampaign
 
             $data = collect();
 
-            if (!empty($first_name)) {
-                $data->put("firstName", $first_name);
+            if (!empty($firstName)) {
+                $data->put("firstName", $firstName);
             }
 
-            if (!empty($last_name)) {
-                $data->put("lastName", $last_name);
+            if (!empty($lastName)) {
+                $data->put("lastName", $lastName);
             }
 
             if (!empty($email)) {
