@@ -3,6 +3,9 @@
 /public/storage
 /storage/*.key
 /vendor
+/.idea
+/tests/TestCase.php
+.editorconfig
 .env
 .env.backup
 .phpunit.result.cache
