@@ -3,23 +3,11 @@
 namespace TalentuI33\ActiveCampaign;
 
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Response;
+use TalentuI33\ActiveCampaign\Services\HttpClient;
 
-class Deal extends ActiveCampaign
+class Deal
 {
     protected static $url = 'deals';
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    private function init(): void
-    {
-        parent::__construct();
-    }
 
     public static function add(
         string $contactId,
@@ -31,44 +19,30 @@ class Deal extends ActiveCampaign
         string $currency = 'cop',
         int $status = 0,
         int $percent = null
-    ): Response
+    ): string
     {
-        $response = null;
-        try {
-            if (!self::$client instanceof Client) {
-                (new Deal)->init();
-            }
+        $client = new HttpClient();
+        $response = $client->postOrPut(static::$url, 'deal', [
+            "contact" => $contactId,
+            "description" => $description,
+            "currency" => strtolower($currency),
+            "owner" => $ownerId,
+            "percent" => $percent,
+            "stage" => $stageId,
+            "status" => $status,
+            "title" => $title,
+            "value" => $value
+        ]);
 
-            $response = self::$client->request('POST', static::$url, [
-                'json' => [
-                    "deal" => [
-                        "contact" => $contactId,
-                        "description" => $description,
-                        "currency" => strtolower($currency),
-                        "owner" => $ownerId,
-                        "percent" => $percent,
-                        "stage" => $stageId,
-                        "status" => $status,
-                        "title" => $title,
-                        "value" => $value
-                    ]
-                ]
-            ]);
-        } catch
-        (GuzzleException $e) {
-            abort($e->getCode(), $e->getMessage());
-        }
-
-        return $response;
+        return $response->getBody();
     }
 
-    public static function getAll(): Response
+    public static function getAll(): string
     {
 
-        try {
-            return self::$client->request('GET', static::$url);
-        } catch (GuzzleException $e) {
-            abort($e->getCode(), $e->getMessage());
-        }
+        $client = new HttpClient();
+        $response = $client->get(self::$url);
+
+        return $response->getBody();
     }
 }

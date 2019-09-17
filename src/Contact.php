@@ -2,10 +2,9 @@
 
 namespace TalentuI33\ActiveCampaign;
 
-use TalentuI33\ActiveCampaign\Services\ActiveCampaignHttpClient;
 use TalentuI33\ActiveCampaign\Services\HttpClient;
 
-class Contact extends ActiveCampaign
+class Contact
 {
     private static $url = 'contacts';
     private static $typeRequest = 'contact';

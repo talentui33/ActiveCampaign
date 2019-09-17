@@ -12,8 +12,8 @@ class UserTest extends TestCase
 {
     public function testGetUserByEmail(): void
     {
-        $response = User::getByEmail($this->userEmail);
+        $user = User::findByEmail($this->userEmail);
 
-        $this->assertTrue($response->getStatusCode() === Response::HTTP_OK);
+        $this->assertJson($user);
     }
 }

@@ -4,37 +4,17 @@
 namespace TalentuI33\ActiveCampaign;
 
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Response;
+use TalentuI33\ActiveCampaign\Services\HttpClient;
 
-class User extends ActiveCampaign
+class User
 {
     protected static $url = 'users';
 
-    public function __construct()
+    public static function findByEmail(string $email): string
     {
-        parent::__construct();
-    }
+        $client = new HttpClient();
+        $response = $client->get(self::$url . "/email/$email");
 
-    private function init(): void
-    {
-        parent::__construct();
-    }
-
-    public static function getByEmail(string $email): Response
-    {
-        $response = null;
-        try {
-            if (!self::$client instanceof Client) {
-                (new User())->init();
-            }
-
-            $response = self::$client->request('GET', self::$url . "/email/$email");
-        } catch (GuzzleException $e) {
-            abort($e->getCode(), $e->getMessage());
-        }
-
-        return $response;
+        return $response->getBody();
     }
 }

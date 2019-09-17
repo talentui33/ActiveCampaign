@@ -29,15 +29,4 @@ class ActiveCampaignServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom($source, 'activecampaign');
     }
-
-    public function register(): void
-    {
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/activecampaign.php', 'activecampaign'
-        );
-
-        $this->app->bind('activecampaign', function ($app) {
-            return new ActiveCampaign();
-        });
-    }
 }
