@@ -42,7 +42,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "TalentuI33\\ActiveCampaign\\ServiceProvider"
+                "TalentuI33\\ActiveCampaign\\ActiveCampaignServiceProvider"
             ],
             "aliases": {
                 "ActiveCampaign": "TalentuI33\\ActiveCampaign\\Facade"
