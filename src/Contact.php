@@ -2,134 +2,79 @@
 
 namespace TalentuI33\ActiveCampaign;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Response;
+use TalentuI33\ActiveCampaign\Services\ActiveCampaignHttpClient;
+use TalentuI33\ActiveCampaign\Services\HttpClient;
 
 class Contact extends ActiveCampaign
 {
-    protected static $url = 'contacts';
+    private static $url = 'contacts';
+    private static $typeRequest = 'contact';
 
-    public function __construct()
+    public static function add(string $firstName, string $lastName, string $email, string $phone): string
     {
-        parent::__construct();
+
+        $client = new HttpClient();
+        $response = $client->postOrPut(static::$url, static::$typeRequest, [
+            "email" => $email,
+            "firstName" => $firstName,
+            "lastName" => $lastName,
+            "phone" => $phone
+        ]);
+
+        return $response->getBody();
     }
 
-    private function init(): void
+    public static function update(string $id, string $firstName = null, string $lastName = null, string $email = null, string $phone = null): string
     {
-        parent::__construct();
-    }
+        $data = collect();
 
-    public static function add(string $firstName, string $lastName, string $email, string $phone): Response
-    {
-        $response = null;
-        try {
-            if (!self::$client instanceof Client) {
-                (new Contact)->init();
-            }
-
-            $response = self::$client->request('POST', static::$url, [
-                'json' => [
-                    "contact" => [
-                        "email" => $email,
-                        "firstName" => $firstName,
-                        "lastName" => $lastName,
-                        "phone" => $phone
-                    ]
-                ]
-            ]);
-        } catch (GuzzleException $e) {
-            abort($e->getCode(), $e->getMessage());
+        if (!empty($firstName)) {
+            $data->put("firstName", $firstName);
         }
 
-        return $response;
-    }
-
-    public static function update(string $id, string $firstName = null, string $lastName = null, string $email = null, string $phone = null): Response
-    {
-        $response = null;
-
-        try {
-            if (!self::$client instanceof Client) {
-                (new Contact)->init();
-            }
-
-            $data = collect();
-
-            if (!empty($firstName)) {
-                $data->put("firstName", $firstName);
-            }
-
-            if (!empty($lastName)) {
-                $data->put("lastName", $lastName);
-            }
-
-            if (!empty($email)) {
-                $data->put("email", $email);
-            }
-
-            if (!empty($phone)) {
-                $data->put("phone", $phone);
-            }
-
-            $jsonData = ['contact' => $data->toArray()];
-
-            $response = self::$client->request('PUT', static::$url . "/{$id}", [
-                'json' => $jsonData
-            ]);
-        } catch (GuzzleException $e) {
-            abort($e->getCode(), $e->getMessage());
+        if (!empty($lastName)) {
+            $data->put("lastName", $lastName);
         }
 
-        return $response;
-    }
-
-    public static function delete(string $id): Response
-    {
-        $response = null;
-        try {
-            if (!self::$client instanceof Client) {
-                (new Contact)->init();
-            }
-
-            $response = self::$client->request('DELETE', static::$url . "/{$id}");
-        } catch (GuzzleException $e) {
-            abort($e->getCode(), $e->getMessage());
+        if (!empty($email)) {
+            $data->put("email", $email);
         }
 
-        return $response;
-    }
-
-    public static function getAll(): Response
-    {
-        $response = null;
-
-        try {
-            if (!self::$client instanceof Client) {
-                (new Contact)->init();
-            }
-
-            $response = self::$client->request('GET', static::$url);
-        } catch (GuzzleException $e) {
-            abort($e->getCode(), $e->getMessage());
+        if (!empty($phone)) {
+            $data->put("phone", $phone);
         }
 
-        return $response;
+        $client = new HttpClient();
+        $response = $client->postOrPut(static::$url . "/{$id}", static::$typeRequest, $data->toArray(), 'put');
+
+        return $response->getBody();
     }
 
-    public static function getByEmail(string $email): Response
+    public static function delete(string $id): string
     {
-        $response = null;
-        try {
-            if (!self::$client instanceof Client) {
-                (new Contact)->init();
-            }
+        $client = new HttpClient();
+        $response = $client->delete(static::$url . "/{$id}");
 
-            $response = self::$client->request('GET', static::$url . "?email={$email}");
-        } catch (GuzzleException $e) {
-            abort($e->getCode(), $e->getMessage());
-        }
+        return $response->getBody();
+    }
 
-        return $response;
+    public
+    static function getAll(): string
+    {
+        $client = new HttpClient();
+        $response = $client->get(self::$url);
+
+        return $response->getBody();
+    }
+
+    public
+    static function findByEmail(string $email): string
+    {
+        $client = new HttpClient();
+        $response = $client->get(static::$url, [
+            'email' => $email
+        ]);
+
+        return $response->getBody();
     }
 }

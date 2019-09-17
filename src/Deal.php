@@ -64,18 +64,11 @@ class Deal extends ActiveCampaign
 
     public static function getAll(): Response
     {
-        $response = null;
 
         try {
-            if (!self::$client instanceof Client) {
-                (new Deal())->init();
-            }
-
-            $response = self::$client->request('GET', static::$url);
+            return self::$client->request('GET', static::$url);
         } catch (GuzzleException $e) {
             abort($e->getCode(), $e->getMessage());
         }
-
-        return $response;
     }
 }
