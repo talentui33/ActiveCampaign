@@ -58,14 +58,10 @@ class ContactTest extends TestCase
         $contact = json_decode((string)Contact::findByEmail('test.email@test.com'));
         if (isset($contact->contacts[0])) {
             $response = Contact::delete($contact->contacts[0]->id);
-            
+
             $this->assertJson($response);
         } else {
             $this->assertTrue(false, 'Data not Found on API');
         }
     }
-
-    /*
-
-    */
 }

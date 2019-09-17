@@ -20,7 +20,7 @@ class ActiveCampaignServiceProvider extends ServiceProvider
         $this->setupConfig();
     }
 
-    protected function setupConfig()
+    protected function setupConfig(): void
     {
         $source = realpath(__DIR__ . '/../config/activecampaign.php');
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {

@@ -23,15 +23,15 @@ class Deal
     {
         $client = new HttpClient();
         $response = $client->postOrPut(static::$url, 'deal', [
-            "contact" => $contactId,
-            "description" => $description,
-            "currency" => strtolower($currency),
-            "owner" => $ownerId,
-            "percent" => $percent,
-            "stage" => $stageId,
-            "status" => $status,
-            "title" => $title,
-            "value" => $value
+            'contact' => $contactId,
+            'description' => $description,
+            'currency' => strtolower($currency),
+            'owner' => $ownerId,
+            'percent' => $percent,
+            'stage' => $stageId,
+            'status' => $status,
+            'title' => $title,
+            'value' => $value
         ]);
 
         return $response->getBody();

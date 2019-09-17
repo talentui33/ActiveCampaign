@@ -14,10 +14,10 @@ class Contact
 
         $client = new HttpClient();
         $response = $client->postOrPut(static::$url, static::$typeRequest, [
-            "email" => $email,
-            "firstName" => $firstName,
-            "lastName" => $lastName,
-            "phone" => $phone
+            'email' => $email,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'phone' => $phone
         ]);
 
         return $response->getBody();
@@ -28,19 +28,19 @@ class Contact
         $data = collect();
 
         if (!empty($firstName)) {
-            $data->put("firstName", $firstName);
+            $data->put('firstName', $firstName);
         }
 
         if (!empty($lastName)) {
-            $data->put("lastName", $lastName);
+            $data->put('lastName', $lastName);
         }
 
         if (!empty($email)) {
-            $data->put("email", $email);
+            $data->put('email', $email);
         }
 
         if (!empty($phone)) {
-            $data->put("phone", $phone);
+            $data->put('phone', $phone);
         }
 
         $client = new HttpClient();
