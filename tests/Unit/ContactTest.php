@@ -8,65 +8,58 @@ use Tests\TestCase;
 
 class ContactTest extends TestCase
 {
-    protected $contactId;
 
     public function testGetAllContacts(): void
     {
-        $response = Contact::getAll();
-
-        $this->assertTrue($response->getStatusCode() === 200);
-    }
-
-    public function testGetContactByEmail()
-    {
-        $response = Contact::getByEmail('smilenaferr22@gmail.com');
-
-        $this->assertTrue($response->getStatusCode() === 200);
+        $contacts = Contact::getAll();
+        $this->assertJson($contacts);
     }
 
     public function testAddNewContact(): void
     {
-        $response = Contact::add(
-            'Sandra Milena',
-            'Ferreira Dimian',
-            'smilenaferr22@gmail.com',
-            '3154770365'
+        $contact = Contact::add(
+            'First Name Test',
+            'Last Name Test',
+            'test.email@test.com',
+            '3004672965'
         );
 
-        $contact = json_decode((string)$response->getBody());
-        $this->contactId = $contact->contact->id;
-
-        $this->assertTrue($response->getStatusCode() === 201);
+        $this->assertJson($contact);
     }
 
-    public function testUpdateContact()
+    public function testFindContactByEmail(): void
     {
-        $response = Contact::getByEmail('smilenaferr22@gmail.com');
-        $contact = json_decode((string)$response->getBody());
+        $contact = Contact::findByEmail('test.email@test.com');
+
+        $this->assertJson($contact);
+    }
+
+    public function testUpdateContact(): void
+    {
+        $contact = json_decode((string)Contact::findByEmail('test.email@test.com'));
 
         if (isset($contact->contacts[0])) {
-            $response = Contact::update(
+            $contact = Contact::update(
                 $contact->contacts[0]->id,
-                'Sandra',
-                'Ferreira',
-                'smilenaferr22@gmail.com',
-                '3154770365'
+                'First Name Test Edited',
+                'Last Name Test Edited',
+                'test.email@test.com',
+                '3004672965'
             );
 
-            $this->assertTrue($response->getStatusCode() === 200);
+            $this->assertJson($contact);
         } else {
-            $this->assertTrue(false, 'Data not Found on API');
+            $this->assertTrue(false, 'Email not found on Active Campaign API');
         }
     }
 
-    public function testDeleteContact()
+    public function testDeleteContact(): void
     {
-        $response = Contact::getByEmail('smilenaferr22@gmail.com');
-        $contact = json_decode((string)$response->getBody());
-
+        $contact = json_decode((string)Contact::findByEmail('test.email@test.com'));
         if (isset($contact->contacts[0])) {
             $response = Contact::delete($contact->contacts[0]->id);
-            $this->assertTrue($response->getStatusCode() === 200);
+
+            $this->assertJson($response);
         } else {
             $this->assertTrue(false, 'Data not Found on API');
         }
