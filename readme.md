@@ -14,7 +14,7 @@ ACTIVECAMPAIGN_API_KEY='Your API Key'
 ````
 
 ## Testing
-Para el uso de los test se debe de crear ls clase **TestCase.php** en el directorio `tests/TestCase.php` y debe de contener la siguiente estructura:
+Para el uso de los test se debe de crear la clase **TestCase.php** en el directorio `tests/TestCase.php` y debe de contener la siguiente estructura:
 
 ```php
 <?php
