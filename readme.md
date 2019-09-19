@@ -5,7 +5,7 @@ Contiene métodos personalizados y soporte para laravel **5.x**
 ## Instalación
 Instalación usando Composer.
 
-`composer require gentor/activecampaign`
+`composer require talentui33/active-campaign`
 
 Agregar las siguientes variables al archivo **.env**
 ````
