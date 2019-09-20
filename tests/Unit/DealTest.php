@@ -6,6 +6,8 @@ namespace Tests\Unit;
 
 use TalentuI33\ActiveCampaign\Contact;
 use TalentuI33\ActiveCampaign\Deal;
+use TalentuI33\ActiveCampaign\Models\ContactModel;
+use TalentuI33\ActiveCampaign\Models\DealModel;
 use TalentuI33\ActiveCampaign\User;
 use Tests\TestCase;
 
@@ -22,16 +24,26 @@ class DealTest extends TestCase
     {
         $user = json_decode(User::findByEmail($this->userEmail));
 
-        $contact = json_decode(Contact::add(
-            'First Name Test',
-            'Last Name Test',
-            'test.email@test.com',
-            '3004672965'
-        ));
+        $newContact = ContactModel::create([
+            'firstName' => 'First Name Test',
+            'lastName' => 'Last Name Test',
+            'email' => 'test.email@test.com',
+            'phone' => '3004672965'
+        ]);
 
-        $deal = Deal::add($contact->contact->id, $user->user->id, 1, 'Test Deal');
-        $this->assertJson($deal);
+        $contact = Contact::add($newContact);
 
-        Contact::delete($contact->contact->id);
+        $newDeal = DealModel::create([
+            'contact' => $contact->id,
+            'owner' => $user->user->id,
+            'stage' => 1,
+            'title' => 'Test Deal'
+        ]);
+
+        $deal = Deal::add($newDeal);
+
+        $this->assertTrue($deal->title === $newDeal->title);
+
+        Contact::delete($contact->id);
     }
 }

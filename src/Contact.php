@@ -2,6 +2,8 @@
 
 namespace TalentuI33\ActiveCampaign;
 
+use TalentuI33\ActiveCampaign\Models\ContactModel;
+use TalentuI33\ActiveCampaign\Providers\ContactProvider;
 use TalentuI33\ActiveCampaign\Services\HttpClient;
 
 class Contact
@@ -9,18 +11,18 @@ class Contact
     private static $url = 'contacts';
     private static $typeRequest = 'contact';
 
-    public static function add(string $firstName, string $lastName, string $email, string $phone): string
+    public static function add(ContactModel $contact): ContactModel
     {
 
         $client = new HttpClient();
         $response = $client->postOrPut(static::$url, static::$typeRequest, [
-            'email' => $email,
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-            'phone' => $phone
+            'email' => $contact->email,
+            'firstName' => $contact->firstName,
+            'lastName' => $contact->lastName,
+            'phone' => $contact->phone
         ]);
 
-        return $response->getBody();
+        return ContactModel::createFromString($response->getBody());
     }
 
     public static function update(string $id, string $firstName = null, string $lastName = null, string $email = null, string $phone = null): string
@@ -57,23 +59,26 @@ class Contact
         return $response->getBody();
     }
 
-    public
-    static function getAll(): string
+    public static function getAll(): array
     {
         $client = new HttpClient();
         $response = $client->get(self::$url);
 
-        return $response->getBody();
+        return ContactProvider::createFromString($response->getBody());
     }
 
     public
-    static function findByEmail(string $email): string
+    static function findByEmail(string $email): ?ContactModel
     {
         $client = new HttpClient();
         $response = $client->get(static::$url, [
             'email' => $email
         ]);
+        $responseData = json_decode($response->getBody(), true);
+        if(isset($responseData['contacts']) && count($responseData['contacts']) > 0) {
+            return ContactModel::create($responseData['contacts'][0]);
+        }
 
-        return $response->getBody();
+        return null;
     }
 }

@@ -4,6 +4,7 @@
 namespace Tests\Unit;
 
 use TalentuI33\ActiveCampaign\Contact;
+use TalentuI33\ActiveCampaign\Models\ContactModel;
 use Tests\TestCase;
 
 class ContactTest extends TestCase
@@ -12,35 +13,37 @@ class ContactTest extends TestCase
     public function testGetAllContacts(): void
     {
         $contacts = Contact::getAll();
-        $this->assertJson($contacts);
+        $this->assertTrue(count($contacts) >= 0);
     }
 
     public function testAddNewContact(): void
     {
-        $contact = Contact::add(
-            'First Name Test',
-            'Last Name Test',
-            'test.email@test.com',
-            '3004672965'
-        );
+        $newContact = ContactModel::create([
+            'firstName' => 'First Name Test',
+            'lastName' => 'Last Name Test',
+            'email' => 'test.email@test.com',
+            'phone' => '3004672965'
+        ]);
 
-        $this->assertJson($contact);
+        $contact = Contact::add($newContact);
+        $this->assertTrue($newContact->email === $contact->email);
     }
 
     public function testFindContactByEmail(): void
     {
         $contact = Contact::findByEmail('test.email@test.com');
-
-        $this->assertJson($contact);
+        if($contact) {
+            $this->assertTrue($contact->email == 'test.email@test.com');
+        }
     }
 
     public function testUpdateContact(): void
     {
-        $contact = json_decode((string)Contact::findByEmail('test.email@test.com'));
+        $contact = Contact::findByEmail('test.email@test.com');
 
-        if (isset($contact->contacts[0])) {
+        if ($contact) {
             $contact = Contact::update(
-                $contact->contacts[0]->id,
+                $contact->id,
                 'First Name Test Edited',
                 'Last Name Test Edited',
                 'test.email@test.com',
@@ -55,9 +58,9 @@ class ContactTest extends TestCase
 
     public function testDeleteContact(): void
     {
-        $contact = json_decode((string)Contact::findByEmail('test.email@test.com'));
-        if (isset($contact->contacts[0])) {
-            $response = Contact::delete($contact->contacts[0]->id);
+        $contact = Contact::findByEmail('test.email@test.com');
+        if ($contact) {
+            $response = Contact::delete($contact->id);
 
             $this->assertJson($response);
         } else {

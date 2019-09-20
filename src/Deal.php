@@ -3,38 +3,29 @@
 namespace TalentuI33\ActiveCampaign;
 
 
+use TalentuI33\ActiveCampaign\Models\DealModel;
 use TalentuI33\ActiveCampaign\Services\HttpClient;
 
 class Deal
 {
     protected static $url = 'deals';
 
-    public static function add(
-        string $contactId,
-        string $ownerId,
-        string $stageId,
-        string $title,
-        string $description = '',
-        int $value = 0,
-        string $currency = 'cop',
-        int $status = 0,
-        int $percent = null
-    ): string
+    public static function add(DealModel $deal): DealModel
     {
         $client = new HttpClient();
         $response = $client->postOrPut(static::$url, 'deal', [
-            'contact' => $contactId,
-            'description' => $description,
-            'currency' => strtolower($currency),
-            'owner' => $ownerId,
-            'percent' => $percent,
-            'stage' => $stageId,
-            'status' => $status,
-            'title' => $title,
-            'value' => $value
+            'contact' => $deal->contact,
+            'description' => $deal->description,
+            'currency' => strtolower($deal->currency),
+            'owner' => $deal->owner,
+            'percent' => $deal->percent,
+            'stage' => $deal->stage,
+            'status' => $deal->status,
+            'title' => $deal->title,
+            'value' => $deal->value
         ]);
 
-        return $response->getBody();
+        return DealModel::createFromString($response->getBody());
     }
 
     public static function getAll(): string
