@@ -32,7 +32,7 @@ class ContactTest extends TestCase
     public function testFindContactByEmail(): void
     {
         $contact = Contact::findByEmail('test.email@test.com');
-        if($contact) {
+        if ($contact) {
             $this->assertTrue($contact->email == 'test.email@test.com');
         }
     }
@@ -42,15 +42,13 @@ class ContactTest extends TestCase
         $contact = Contact::findByEmail('test.email@test.com');
 
         if ($contact) {
-            $contact = Contact::update(
-                $contact->id,
-                'First Name Test Edited',
-                'Last Name Test Edited',
-                'test.email@test.com',
-                '3004672965'
-            );
+            $contact->firstName = 'First Name Test Edited';
+            $contact->lastName = 'Last Name Test Edited';
+            $contact->phone = '3004672965';
 
-            $this->assertJson($contact);
+            $contact = Contact::update($contact);
+
+            $this->assertTrue($contact->firstName === 'First Name Test Edited');
         } else {
             $this->assertTrue(false, 'Email not found on Active Campaign API');
         }
