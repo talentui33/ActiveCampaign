@@ -22,8 +22,7 @@ class DealTest extends TestCase
 
     public function testAddNewDeal(): void
     {
-        $user = json_decode(User::findByEmail($this->userEmail));
-
+        $user = User::findByEmail($this->userEmail);
         $newContact = ContactModel::create([
             'firstName' => 'First Name Test',
             'lastName' => 'Last Name Test',
@@ -35,7 +34,7 @@ class DealTest extends TestCase
 
         $newDeal = DealModel::create([
             'contact' => $contact->id,
-            'owner' => $user->user->id,
+            'owner' => $user->id,
             'stage' => 1,
             'title' => 'Test Deal'
         ]);
