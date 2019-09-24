@@ -16,8 +16,7 @@ class DealTest extends TestCase
     public function testGetAllDeals(): void
     {
         $deals = Deal::getAll();
-
-        $this->assertJson($deals);
+        $this->assertIsArray($deals);
     }
 
     public function testAddNewDeal(): void

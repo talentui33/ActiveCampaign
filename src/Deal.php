@@ -4,6 +4,7 @@ namespace TalentuI33\ActiveCampaign;
 
 
 use TalentuI33\ActiveCampaign\Models\DealModel;
+use TalentuI33\ActiveCampaign\Providers\DealProvider;
 use TalentuI33\ActiveCampaign\Services\HttpClient;
 
 class Deal
@@ -28,12 +29,12 @@ class Deal
         return DealModel::createFromString($response->getBody());
     }
 
-    public static function getAll(): string
+    public static function getAll(): array
     {
 
         $client = new HttpClient();
         $response = $client->get(self::$url);
 
-        return $response->getBody();
+        return DealProvider::createFromString($response->getBody());
     }
 }

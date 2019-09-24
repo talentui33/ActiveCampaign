@@ -6,11 +6,34 @@ namespace TalentuI33\ActiveCampaign\Models;
 
 class ContactModel
 {
+    /**
+     * @var string
+     */
     public $id;
+
+    /**
+     * @var string
+     */
     public $firstName;
+
+    /**
+     * @var string
+     */
     public $lastName;
+
+    /**
+     * @var string
+     */
     public $email;
+
+    /**
+     * @var string
+     */
     public $phone;
+
+    /**
+     * @var string
+     */
     private $cdate;
 
     public static function create(array $metaData): self
