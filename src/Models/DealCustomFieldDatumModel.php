@@ -14,7 +14,7 @@ class DealCustomFieldDatumModel
     public $updatedTimestamp;
     public $fieldValue;
 
-    public static function create(array $metaData)
+    public static function create(array $metaData): self
     {
         $meta = new self();
         foreach ($metaData as $key => $value) {
@@ -24,7 +24,7 @@ class DealCustomFieldDatumModel
         return $meta;
     }
 
-    public static function createFromString(string $metaData)
+    public static function createFromString(string $metaData): self
     {
         $contactObject = json_decode($metaData, true);
         return self::create($contactObject['dealCustomFieldDatum']);

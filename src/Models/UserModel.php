@@ -18,7 +18,7 @@ class UserModel
     public $udate;
     public $mfaEnabled;
 
-    public static function create(array $metaData)
+    public static function create(array $metaData): self
     {
         $meta = new self();
         foreach ($metaData as $key => $value) {
@@ -28,7 +28,7 @@ class UserModel
         return $meta;
     }
 
-    public static function createFromString(string $metaData)
+    public static function createFromString(string $metaData): self
     {
         $contactObject = json_decode($metaData, true);
         return self::create($contactObject['user']);

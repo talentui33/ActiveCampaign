@@ -17,7 +17,7 @@ class DealModel
     public $title;
     public $value = 0;
 
-    public static function create(array $metaData)
+    public static function create(array $metaData): self
     {
         $meta = new self();
         foreach ($metaData as $key => $value) {
@@ -27,7 +27,7 @@ class DealModel
         return $meta;
     }
 
-    public static function createFromString(string $metaData)
+    public static function createFromString(string $metaData): self
     {
         $contactObject = json_decode($metaData, true);
         return self::create($contactObject['deal']);
