@@ -4,7 +4,7 @@
 namespace Tests\Unit;
 
 
-use Illuminate\Http\Response;
+use TalentuI33\ActiveCampaign\Models\UserModel;
 use TalentuI33\ActiveCampaign\User;
 use Tests\TestCase;
 
@@ -14,6 +14,6 @@ class UserTest extends TestCase
     {
         $user = User::findByEmail($this->userEmail);
 
-        $this->assertJson($user);
+        $this->assertTrue($user instanceof UserModel || $user === null);
     }
 }
