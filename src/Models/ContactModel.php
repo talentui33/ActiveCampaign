@@ -11,15 +11,16 @@ class ContactModel
     public $lastName;
     public $email;
     public $phone;
-    private $cdate;
 
     public static function create(array $metaData): self
     {
         $meta = new self();
 
-        foreach ($metaData as $key => $value) {
-            $meta->$key = $value;
-        }
+        $meta->id = isset($metaData['id']) ? $metaData['id'] : null;
+        $meta->firstName = isset($metaData['firstName']) ? $metaData['firstName'] : '';
+        $meta->lastName = isset($metaData['lastName']) ? $metaData['lastName'] : '';
+        $meta->email = isset($metaData['email']) ? $metaData['email'] : '';
+        $meta->phone = isset($metaData['phone']) ? $metaData['phone'] : '';
 
         return $meta;
     }
