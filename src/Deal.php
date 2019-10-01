@@ -37,4 +37,17 @@ class Deal
 
         return DealProvider::createFromString($response->getBody());
     }
+
+    public static function findById(string $id): ?DealModel
+    {
+        $client = new HttpClient();
+        $response = $client->get(self::$url."/$id");
+
+        $responseData = json_decode($response->getBody(), true);
+        if (!isset($responseData['deal'])) {
+            return null;
+        }
+
+        return DealModel::create($responseData['deal']);
+    }
 }

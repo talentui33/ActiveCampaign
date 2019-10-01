@@ -54,8 +54,7 @@ class Contact
         return ContactProvider::createFromString($response->getBody());
     }
 
-    public
-    static function findByEmail(string $email): ?ContactModel
+    public static function findByEmail(string $email): ?ContactModel
     {
         $client = new HttpClient();
         $response = $client->get(static::$url, [
@@ -67,5 +66,17 @@ class Contact
         }
 
         return null;
+    }
+
+    public static function findById(string $id): ?ContactModel
+    {
+        $client = new HttpClient();
+        $response = $client->get(static::$url . "/$id");
+        $responseData = json_decode($response->getBody(), true);
+        if (!isset($responseData['contact'])) {
+            return null;
+        }
+
+        return ContactModel::create($responseData['contact']);
     }
 }

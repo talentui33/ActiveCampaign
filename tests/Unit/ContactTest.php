@@ -37,6 +37,24 @@ class ContactTest extends TestCase
         }
     }
 
+    public function testFindContactById(): void
+    {
+        $newContact = ContactModel::create([
+            'firstName' => 'First Name Test',
+            'lastName' => 'Last Name Test',
+            'email' => 'test_find.email@test.com',
+            'phone' => '3004672965'
+        ]);
+
+        $contactAdded = Contact::add($newContact);
+
+        $contact = Contact::findById($contactAdded->id);
+        $this->assertTrue($contact->email == $contactAdded->email);
+
+        $response = Contact::delete($contact->id);
+        $this->assertJson($response);
+    }
+
     public function testUpdateContact(): void
     {
         $contact = Contact::findByEmail('test.email@test.com');
