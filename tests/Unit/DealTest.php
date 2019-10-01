@@ -44,4 +44,31 @@ class DealTest extends TestCase
 
         Contact::delete($contact->id);
     }
+
+    public function testFindDealById(): void
+    {
+        $user = User::findByEmail($this->userEmail);
+        $newContact = ContactModel::create([
+            'firstName' => 'First Name Test',
+            'lastName' => 'Last Name Test',
+            'email' => 'test_deal.email@test.com',
+            'phone' => '3004672965'
+        ]);
+
+        $contact = Contact::add($newContact);
+
+        $newDeal = DealModel::create([
+            'contact' => $contact->id,
+            'owner' => $user->id,
+            'stage' => 1,
+            'title' => 'Test Deal Find'
+        ]);
+
+        $dealAdded = Deal::add($newDeal);
+
+        $deal = Deal::findById($dealAdded->id);
+        $this->assertTrue($deal->title === $dealAdded->title);
+
+        Contact::delete($contact->id);
+    }
 }
