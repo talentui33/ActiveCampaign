@@ -35,7 +35,7 @@ class HttpClient
     {
         try {
             if (isset($type)) {
-                $data = ["$type" => $params];
+                $data = ["{$type}" => $params];
             } else {
                 $data = $params;
             }
