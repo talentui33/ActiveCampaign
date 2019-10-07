@@ -48,4 +48,15 @@ class DealCustomField
 
         return DealCustomFieldDatumModel::createFromString($response->getBody());
     }
+
+    public static function updateBulkCustomFieldValue(array $customFieldModels): ?bool
+    {
+        $client = new HttpClient();
+        $client->postOrPut(
+            static::$customFieldDataUrl . '/bulkCreate',
+            null, $customFieldModels
+        );
+
+        return true;
+    }
 }
