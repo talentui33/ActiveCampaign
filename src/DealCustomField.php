@@ -7,6 +7,7 @@ namespace TalentuI33\ActiveCampaign;
 use TalentuI33\ActiveCampaign\Models\DealCustomFieldDatumModel;
 use TalentuI33\ActiveCampaign\Models\DealCustomFieldModel;
 use TalentuI33\ActiveCampaign\Models\DealModel;
+use TalentuI33\ActiveCampaign\Providers\DealCustomFieldDatumProvider;
 use TalentuI33\ActiveCampaign\Providers\DealCustomFieldProvider;
 use TalentuI33\ActiveCampaign\Services\HttpClient;
 
@@ -37,7 +38,7 @@ class DealCustomField
         return null;
     }
 
-    public static function updateCustomFiledValue(DealModel $dealModel, DealCustomFieldModel $customFieldModel, string $fieldValue): DealCustomFieldDatumModel
+    public static function createCustomFiledValue(DealModel $dealModel, DealCustomFieldModel $customFieldModel, string $fieldValue): DealCustomFieldDatumModel
     {
         $client = new HttpClient();
         $response = $client->postOrPut(static::$customFieldDataUrl, 'dealCustomFieldDatum', [
@@ -49,7 +50,7 @@ class DealCustomField
         return DealCustomFieldDatumModel::createFromString($response->getBody());
     }
 
-    public static function updateBulkCustomFieldValue(array $customFieldModels): ?bool
+    public static function createBulkCustomFieldValue(array $customFieldModels): ?bool
     {
         $client = new HttpClient();
         $client->postOrPut(
@@ -58,5 +59,13 @@ class DealCustomField
         );
 
         return true;
+    }
+
+    public static function getCustomFieldDataByDeal(DealModel $deal): array
+    {
+        $client = new HttpClient();
+        $response = $client->get("deals/{$deal->id}/dealCustomFieldData");
+
+        return DealCustomFieldDatumProvider::createFromString($response->getBody());
     }
 }
