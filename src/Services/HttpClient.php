@@ -31,13 +31,17 @@ class HttpClient
         }
     }
 
-    public function postOrPut(string $uri, string $type, array $params, string $action = 'POST', string $requestOption = 'json'): Response
+    public function postOrPut(string $uri, string $type = null, array $params = [], string $action = 'POST', string $requestOption = 'json'): Response
     {
         try {
+            if (isset($type)) {
+                $data = ["$type" => $params];
+            } else {
+                $data = $params;
+            }
+
             return $this->client->request(strtoupper($action), $uri, [
-                "{$requestOption}" => [
-                    "$type" => $params
-                ]
+                "{$requestOption}" => $data
             ]);
         } catch (GuzzleException $e) {
             return abort($e->getCode(), $e->getMessage());
