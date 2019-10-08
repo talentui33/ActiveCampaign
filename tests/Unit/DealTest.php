@@ -78,9 +78,9 @@ class DealTest extends TestCase
     {
         $user = User::findByEmail($this->userEmail);
         $newContact = ContactModel::create([
-            'firstName' => 'Kevin',
-            'lastName' => 'Cifuentes',
-            'email' => 'cifuenteskevin85@gmail.com',
+            'firstName' => 'First Name Test',
+            'lastName' => 'Last Name Test',
+            'email' => 'test_deal.email@test.com',
             'phone' => '3004672965'
         ]);
 
