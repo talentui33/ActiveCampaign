@@ -13,7 +13,7 @@ class DealCustomFieldDatumProvider
         $dealCustomFieldDatums = [];
         $dealCustomFieldObject = json_decode($metaData, true);
         foreach ($dealCustomFieldObject['dealCustomFieldData'] as $dealCustomField) {
-            array(array_push($dealCustomFields, DealCustomFieldDatumModel::create($dealCustomField)));
+            array(array_push($dealCustomFieldDatums, DealCustomFieldDatumModel::create($dealCustomField)));
         }
 
         return $dealCustomFieldDatums;

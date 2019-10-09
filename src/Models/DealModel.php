@@ -8,13 +8,13 @@ class DealModel
 {
     public $id;
     public $contact;
-    public $description = '';
+    public $description = null;
     public $currency = 'cop';
-    public $owner;
-    public $percent;
-    public $stage;
+    public $owner = null;
+    public $percent = null;
+    public $stage = null;
     public $status = 0;
-    public $title;
+    public $title = null;
     public $value = 0;
 
     public static function create(array $metaData): self
