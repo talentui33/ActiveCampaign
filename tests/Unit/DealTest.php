@@ -112,14 +112,14 @@ class DealTest extends TestCase
         $fieldDatums = DealCustomField::getCustomFieldDataByDeal($deal);
 
         foreach ($fieldDatums as $fieldDatum) {
-            if ($fieldDatum->customFieldId == 1 || $fieldDatum->customFieldId == 4) {
+            if ($fieldDatum->customFieldId == $this->DEAL_CAMPAIGN) {
                 $fieldDatum->fieldValue .= ' Updated';
             }
         }
 
         DealCustomField::updateBulkCustomFieldValue($fieldDatums);
 
-        $deal->status = 1;
+        $deal->status = $this->DEAL_WON;
         $dealUpdated = Deal::updateDeal($deal);
 
         $this->assertTrue($deal->status == $dealUpdated->status);

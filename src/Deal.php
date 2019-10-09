@@ -31,7 +31,7 @@ class Deal
     public static function findById(string $id): ?DealModel
     {
         $client = new HttpClient();
-        $response = $client->get(self::$url . "/$id");
+        $response = $client->get(self::$url . "/{$id}");
 
         $responseData = json_decode($response->getBody(), true);
         if (!isset($responseData['deal'])) {

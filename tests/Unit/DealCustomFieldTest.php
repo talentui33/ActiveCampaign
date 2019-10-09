@@ -45,7 +45,7 @@ class DealCustomFieldTest extends TestCase
         $newDeal = DealModel::create([
             'contact' => $contact->id,
             'owner' => $user->id,
-            'stage' => 1,
+            'stage' => $this->DEAL_STAGE,
             'title' => 'Test Deal'
         ]);
 
@@ -74,7 +74,7 @@ class DealCustomFieldTest extends TestCase
         $newDeal = DealModel::create([
             'contact' => $contact->id,
             'owner' => $user->id,
-            'stage' => 1,
+            'stage' => $this->DEAL_STAGE,
             'title' => 'Test Deal'
         ]);
 
@@ -115,7 +115,7 @@ class DealCustomFieldTest extends TestCase
         $newDeal = DealModel::create([
             'contact' => $contact->id,
             'owner' => $user->id,
-            'stage' => 1,
+            'stage' => $this->DEAL_STAGE,
             'title' => 'Test Deal'
         ]);
 
@@ -159,7 +159,7 @@ class DealCustomFieldTest extends TestCase
         $newDeal = DealModel::create([
             'contact' => $contact->id,
             'owner' => $user->id,
-            'stage' => 1,
+            'stage' => $this->DEAL_STAGE,
             'title' => 'Test Deal'
         ]);
 
