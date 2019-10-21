@@ -18,13 +18,13 @@ class DealCustomFieldDatumModel
     {
         $meta = new self();
 
-        $meta->id = isset($metaData['id']) ? $metaData['id'] : '';
-        $meta->dealCustomFieldMetumId = isset($metaData['dealCustomFieldMetumId']) ? $metaData['dealCustomFieldMetumId'] : '';
-        $meta->dealId = isset($metaData['dealId']) ? $metaData['dealId'] : '';
-        $meta->customFieldId = isset($metaData['customFieldId']) ? $metaData['customFieldId'] : '';
-        $meta->createdTimestamp = isset($metaData['createdTimestamp']) ? $metaData['createdTimestamp'] : '';
-        $meta->updatedTimestamp = isset($metaData['updatedTimestamp']) ? $metaData['updatedTimestamp'] : '';
-        $meta->fieldValue = isset($metaData['fieldValue']) ? $metaData['fieldValue'] : '';
+        $meta->id = $metaData['id'] ?? '';
+        $meta->dealCustomFieldMetumId =  $metaData['dealCustomFieldMetumId'] ?? '';
+        $meta->dealId = $metaData['dealId'] ?? '';
+        $meta->customFieldId = $metaData['customFieldId'] ?? '';
+        $meta->createdTimestamp = $metaData['createdTimestamp'] ?? '';
+        $meta->updatedTimestamp = $metaData['updatedTimestamp'] ?? '';
+        $meta->fieldValue = $metaData['fieldValue'] ?? '';
 
         return $meta;
     }
