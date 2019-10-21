@@ -25,20 +25,20 @@ class DealCustomFieldModel
     {
         $meta = new self();
 
-        $meta->id = isset($metaData['id']) ? $metaData['id'] : '';
-        $meta->fieldLabel = isset($metaData['fieldLabel']) ? $metaData['fieldLabel'] : '';
-        $meta->fieldType = isset($metaData['fieldType']) ? $metaData['fieldType'] : '';
-        $meta->fieldOptions = isset($metaData['fieldOptions']) ? $metaData['fieldOptions'] : '';
-        $meta->fieldDefault = isset($metaData['fieldDefault']) ? $metaData['fieldDefault'] : '';
-        $meta->fieldDefaultCurrency = isset($metaData['fieldDefaultCurrency']) ? $metaData['fieldDefaultCurrency'] : '';
-        $meta->isFormVisible = isset($metaData['isFormVisible']) ? $metaData['isFormVisible'] : '';
-        $meta->isRequired = isset($metaData['isRequired']) ? $metaData['isRequired'] : '';
-        $meta->displayOrder = isset($metaData['displayOrder']) ? $metaData['displayOrder'] : '';
-        $meta->personalization = isset($metaData['personalization']) ? $metaData['personalization'] : '';
-        $meta->knownFieldId = isset($metaData['knownFieldId']) ? $metaData['knownFieldId'] : '';
-        $meta->hideFieldFlag = isset($metaData['hideFieldFlag']) ? $metaData['hideFieldFlag'] : '';
-        $meta->createdTimestamp = isset($metaData['createdTimestamp']) ? $metaData['createdTimestamp'] : '';
-        $meta->updatedTimestamp = isset($metaData['updatedTimestamp']) ? $metaData['updatedTimestamp'] : '';
+        $meta->id = $metaData['id'] ?? '';
+        $meta->fieldLabel = $metaData['fieldLabel'] ?? '';
+        $meta->fieldType = $metaData['fieldType'] ?? '';
+        $meta->fieldOptions = $metaData['fieldOptions'] ?? '';
+        $meta->fieldDefault = $metaData['fieldDefault'] ?? '';
+        $meta->fieldDefaultCurrency = $metaData['fieldDefaultCurrency'] ?? '';
+        $meta->isFormVisible = $metaData['isFormVisible'] ?? '';
+        $meta->isRequired = $metaData['isRequired'] ?? '';
+        $meta->displayOrder = $metaData['displayOrder'] ?? '';
+        $meta->personalization = $metaData['personalization'] ?? '';
+        $meta->knownFieldId = $metaData['knownFieldId'] ?? '';
+        $meta->hideFieldFlag = $metaData['hideFieldFlag'] ?? '';
+        $meta->createdTimestamp = $metaData['createdTimestamp'] ?? '';
+        $meta->updatedTimestamp = $metaData['updatedTimestamp'] ?? '';
 
         return $meta;
     }

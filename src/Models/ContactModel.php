@@ -16,11 +16,11 @@ class ContactModel
     {
         $meta = new self();
 
-        $meta->id = isset($metaData['id']) ? $metaData['id'] : null;
-        $meta->firstName = isset($metaData['firstName']) ? $metaData['firstName'] : '';
-        $meta->lastName = isset($metaData['lastName']) ? $metaData['lastName'] : '';
-        $meta->email = isset($metaData['email']) ? $metaData['email'] : '';
-        $meta->phone = isset($metaData['phone']) ? $metaData['phone'] : '';
+        $meta->id = $metaData['id'] ?? null;
+        $meta->firstName = $metaData['firstName'] ?? '';
+        $meta->lastName = $metaData['lastName'] ?? '';
+        $meta->email = $metaData['email'] ?? '';
+        $meta->phone = $metaData['phone'] ?? '';
 
         return $meta;
     }

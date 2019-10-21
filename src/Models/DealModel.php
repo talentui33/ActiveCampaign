@@ -20,8 +20,8 @@ class DealModel
     public static function create(array $metaData): self
     {
         $meta = new self();
-        $meta->id = isset($metaData['id']) ? $metaData['id'] : null;
-        $meta->contact = isset($metaData['contact']) ? $metaData['contact'] : '';
+        $meta->id = $metaData['id'] ?? null;
+        $meta->contact = $metaData['contact'] ?? '';
 
         if(isset($metaData['description'])) {
             $meta->description = $metaData['description'];
@@ -31,15 +31,15 @@ class DealModel
             $meta->currency = $metaData['currency'];
         }
 
-        $meta->owner = isset($metaData['owner']) ? $metaData['owner'] : '';
-        $meta->percent = isset($metaData['percent']) ? $metaData['percent'] : '';
-        $meta->stage = isset($metaData['stage']) ? $metaData['stage'] : '';
+        $meta->owner = $metaData['owner'] ?? '';
+        $meta->percent = $metaData['percent'] ?? '';
+        $meta->stage = $metaData['stage'] ?? '';
 
         if(isset($metaData['status'])) {
             $meta->status = $metaData['status'];
         }
 
-        $meta->title = isset($metaData['title']) ? $metaData['title'] : '';
+        $meta->title = $metaData['title'] ?? '';
 
         if(isset($metaData['value'])) {
             $meta->value = $metaData['value'];
