@@ -13,43 +13,56 @@ class Deal
 
     public static function add(DealModel $deal): DealModel
     {
-        $client = new HttpClient();
-        $response = $client->postOrPut(static::$url, 'deal', self::makeDealData($deal));
-
+        try {
+            $client = new HttpClient();
+            $response = $client->postOrPut(static::$url, 'deal', self::makeDealData($deal));
+        } catch (\Exception $exception) {
+            throw new $exception;
+        }
         return DealModel::createFromString($response->getBody());
     }
 
     public static function getAll(): array
     {
-
-        $client = new HttpClient();
-        $response = $client->get(self::$url);
+        try {
+            $client = new HttpClient();
+            $response = $client->get(self::$url);
+        } catch (\Exception $exception) {
+            throw new $exception;
+        }
 
         return DealProvider::createFromString($response->getBody());
     }
 
     public static function findById(string $id): ?DealModel
     {
-        $client = new HttpClient();
-        $response = $client->get(self::$url . "/{$id}");
+        try {
+            $client = new HttpClient();
+            $response = $client->get(self::$url . "/{$id}");
 
-        $responseData = json_decode($response->getBody(), true);
-        if (!isset($responseData['deal'])) {
-            return null;
+            $responseData = json_decode($response->getBody(), true);
+            if (!isset($responseData['deal'])) {
+                return null;
+            }
+        }catch (\Exception $exception){
+            throw new $exception;
         }
-
         return DealModel::create($responseData['deal']);
     }
 
     public static function updateDeal(DealModel $deal): ?DealModel
     {
-        $client = new HttpClient();
-        $response = $client->postOrPut(
-            self::$url . "/{$deal->id}",
-            'deal',
-            self::makeDealData($deal),
-            'PUT'
-        );
+        try {
+            $client = new HttpClient();
+            $response = $client->postOrPut(
+                self::$url . "/{$deal->id}",
+                'deal',
+                self::makeDealData($deal),
+                'PUT'
+            );
+        } catch (\Exception $exception) {
+            throw new $exception;
+        }
 
         return DealModel::createFromString($response->getBody());
     }
