@@ -4,6 +4,7 @@
 namespace TalentuI33\ActiveCampaign;
 
 
+use Exception;
 use TalentuI33\ActiveCampaign\Models\UserModel;
 use TalentuI33\ActiveCampaign\Services\HttpClient;
 
@@ -13,14 +14,17 @@ class User
 
     public static function findByEmail(string $email): ?UserModel
     {
-        $client = new HttpClient();
-        $response = $client->get(self::$url . "/email/$email");
+        try {
+            $client = new HttpClient();
+            $response = $client->get(self::$url . "/email/$email");
 
-        $responseData = json_decode($response->getBody(), true);
-        if (isset($responseData) && count($responseData['user']) > 0) {
-            return UserModel::create($responseData['user']);
+            $responseData = json_decode($response->getBody(), true);
+            if (isset($responseData) && count($responseData['user']) > 0) {
+                return UserModel::create($responseData['user']);
+            }
+        } catch (Exception $exception) {
+            throw new $exception;
         }
-
         return null;
     }
 }
