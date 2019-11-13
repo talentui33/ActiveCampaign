@@ -30,7 +30,7 @@ class ActiveCampaignServiceProvider extends ServiceProvider
 
             $this->mergeConfigFrom($source, 'activecampaign');
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
     }
 }

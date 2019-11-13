@@ -27,7 +27,7 @@ class HttpClient
                 'query' => $params
             ]);
         } catch (GuzzleException $e) {
-            return abort($e->getCode(), $e->getMessage());
+            throw $e;
         }
     }
 
@@ -44,7 +44,7 @@ class HttpClient
                 "{$requestOption}" => $data
             ]);
         } catch (GuzzleException $e) {
-            throw new $e;
+            throw $e;
         }
     }
 
@@ -53,7 +53,7 @@ class HttpClient
         try {
             return $this->client->request('DELETE', $uri);
         } catch (GuzzleException $e) {
-            throw new $e;
+            throw $e;
         }
     }
 }

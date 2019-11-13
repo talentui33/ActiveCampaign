@@ -23,7 +23,7 @@ class User
                 return UserModel::create($responseData['user']);
             }
         } catch (Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
         return null;
     }

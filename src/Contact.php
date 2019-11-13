@@ -22,7 +22,7 @@ class Contact
                 'phone' => $contact->phone
             ]);
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return ContactModel::createFromString($response->getBody());
@@ -39,7 +39,7 @@ class Contact
                 'phone' => $contact->phone
             ], 'put');
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return ContactModel::createFromString($response->getBody());
@@ -51,7 +51,7 @@ class Contact
             $client = new HttpClient();
             $response = $client->delete(static::$url . "/{$id}");
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
         return $response->getBody();
     }
@@ -62,7 +62,7 @@ class Contact
             $client = new HttpClient();
             $response = $client->get(self::$url);
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return ContactProvider::createFromString($response->getBody());
@@ -80,7 +80,7 @@ class Contact
                 return ContactModel::create($responseData['contacts'][0]);
             }
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return null;
@@ -96,7 +96,7 @@ class Contact
                 return null;
             }
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return ContactModel::create($responseData['contact']);

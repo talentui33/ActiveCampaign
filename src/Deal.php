@@ -17,7 +17,7 @@ class Deal
             $client = new HttpClient();
             $response = $client->postOrPut(static::$url, 'deal', self::makeDealData($deal));
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
         return DealModel::createFromString($response->getBody());
     }
@@ -28,7 +28,7 @@ class Deal
             $client = new HttpClient();
             $response = $client->get(self::$url);
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return DealProvider::createFromString($response->getBody());
@@ -45,7 +45,7 @@ class Deal
                 return null;
             }
         }catch (\Exception $exception){
-            throw new $exception;
+            throw $exception;
         }
         return DealModel::create($responseData['deal']);
     }
@@ -61,7 +61,7 @@ class Deal
                 'PUT'
             );
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return DealModel::createFromString($response->getBody());
