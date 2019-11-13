@@ -22,7 +22,7 @@ class DealCustomField
             $client = new HttpClient();
             $response = $client->get(self::$url);
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return DealCustomFieldProvider::createFromString($response->getBody());
@@ -41,7 +41,7 @@ class DealCustomField
                 return DealCustomFieldModel::create($responseData['dealCustomFieldMeta'][0]);
             }
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return null;
@@ -57,7 +57,7 @@ class DealCustomField
                 "fieldValue" => $fieldValue,
             ]);
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return DealCustomFieldDatumModel::createFromString($response->getBody());
@@ -72,7 +72,7 @@ class DealCustomField
                 null, $customFieldModels
             );
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return true;
@@ -84,7 +84,7 @@ class DealCustomField
             $client = new HttpClient();
             $response = $client->get("deals/{$deal->id}/dealCustomFieldData");
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return DealCustomFieldDatumProvider::createFromString($response->getBody());
@@ -99,7 +99,7 @@ class DealCustomField
                 null, $customFieldModels, 'PATCH'
             );
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
 
         return true;
