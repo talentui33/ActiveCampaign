@@ -4,7 +4,7 @@
 namespace TalentuI33\ActiveCampaign\Models;
 
 
-class Field
+class FieldModel
 {
     public $id = null;
     public $title = null;
@@ -32,7 +32,7 @@ class Field
 
         $meta->id = $metaData['id'];
         $meta->title = $metaData['title'];
-        $meta->description = $metaData['description'];
+        $meta->description = $metaData['descript'];
         $meta->type = $metaData['type'];
         $meta->is_required = $metaData['isrequired'];
         $meta->per_stag = $metaData['perstag'];
@@ -50,5 +50,11 @@ class Field
         $meta->links = $metaData['links'];
 
         return $meta;
+    }
+
+    public static function createFromString(string $metaData): self
+    {
+        $fieldObject = json_decode($metaData, true);
+        return self::create($fieldObject['fields']);
     }
 }
