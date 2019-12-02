@@ -26,6 +26,8 @@ class FieldTest extends TestCase
 
     public function testGetAllFieldValues()
     {
-        $this->assertTrue(true);
+        $fieldValues = Field::getAllFieldValues();
+
+        $this->assertIsArray($fieldValues);
     }
 }

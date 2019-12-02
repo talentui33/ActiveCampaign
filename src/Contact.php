@@ -4,12 +4,14 @@ namespace TalentuI33\ActiveCampaign;
 
 use TalentuI33\ActiveCampaign\Models\ContactModel;
 use TalentuI33\ActiveCampaign\Providers\ContactProvider;
+use TalentuI33\ActiveCampaign\Providers\FieldValeProvider;
 use TalentuI33\ActiveCampaign\Services\HttpClient;
 
 class Contact
 {
     private static $url = 'contacts';
     private static $typeRequest = 'contact';
+    private static $fieldValuesUrl = 'fieldValues';
 
     public static function add(ContactModel $contact): ContactModel
     {
@@ -100,5 +102,19 @@ class Contact
         }
 
         return ContactModel::create($responseData['contact']);
+    }
+
+    public static function getFieldValues(ContactModel $contact)
+    {
+        try {
+            $client = new HttpClient();
+            $response = $client->get(self::$url . "/{$contact->id}" . self::$fieldValuesUrl, [
+                'limit' => 100,
+            ]);
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+
+        return FieldValeProvider::createFromString($response->getBody());
     }
 }
