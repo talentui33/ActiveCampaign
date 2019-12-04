@@ -22,7 +22,7 @@ class Field
     {
         try {
             $client = new HttpClient();
-            $response = $client->get(self::$url);
+            $response = $client->get(self::$url, ['limit' => 100]);
         } catch (\Exception $exception) {
             throw $exception;
         }
@@ -50,27 +50,30 @@ class Field
         return FieldValeProvider::createFromString($response->getBody());
     }
 
-    public static function updateFieldValue(ContactModel $contact, FieldValueModel $fieldValue): ?ContactModel
+    public static function updateOrCreateFieldValue(
+        ContactModel $contact,
+        FieldValueModel $fieldValue,
+        string $action = 'POST'
+    ): ?bool
     {
+        $url = strtoupper($action) === 'POST'
+            ? self::$fieldValuesUrl
+            : self::$fieldValuesUrl . "/{$fieldValue->id}";
+        
         try {
             $client = new HttpClient();
-            $response = $client->postOrPut(self::$fieldValuesUrl . "/{$fieldValue->id} ",
+            $client->postOrPut($url,
                 self::$fieldValueTypeRequest, [
                     "contact" => $contact->id,
                     "field" => $fieldValue->field,
                     "value" => $fieldValue->value
-                ]
+                ],
+                strtoupper($action)
             );
         } catch (\Exception $exception) {
             throw $exception;
         }
 
-        $data = json_encode($response->getBody(), true);
-
-        if(isset($data['contacts']) && count($data['contacts']) > 0){
-            return ContactModel::create($data['contacts']);
-        }
-
-        return null;
+        return true;
     }
 }
