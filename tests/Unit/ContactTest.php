@@ -13,6 +13,7 @@ class ContactTest extends TestCase
     public function testGetAllContacts(): void
     {
         $contacts = Contact::getAll();
+        dump($contacts);
         $this->assertTrue(count($contacts) >= 0);
     }
 
@@ -82,5 +83,13 @@ class ContactTest extends TestCase
         } else {
             $this->assertTrue(false, 'Data not Found on API');
         }
+    }
+
+    public function testGetFieldValues()
+    {
+        $contact = Contact::findById('56369');
+        $fieldValues = Contact::getFieldValues($contact);
+
+        $this->assertIsArray($fieldValues);
     }
 }
