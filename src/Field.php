@@ -59,10 +59,10 @@ class Field
         $url = strtoupper($action) === 'POST'
             ? self::$fieldValuesUrl
             : self::$fieldValuesUrl . "/{$fieldValue->id}";
-        
+
         try {
             $client = new HttpClient();
-            $client->postOrPut($url,
+            $response = $client->postOrPut($url,
                 self::$fieldValueTypeRequest, [
                     "contact" => $contact->id,
                     "field" => $fieldValue->field,
@@ -70,10 +70,10 @@ class Field
                 ],
                 strtoupper($action)
             );
+
+            return $response->getStatusCode() == '200' ? true : false;
         } catch (\Exception $exception) {
             throw $exception;
         }
-
-        return true;
     }
 }

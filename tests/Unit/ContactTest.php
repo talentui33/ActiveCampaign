@@ -5,6 +5,7 @@ namespace Tests\Unit;
 
 use TalentuI33\ActiveCampaign\Contact;
 use TalentuI33\ActiveCampaign\Models\ContactModel;
+use TalentuI33\ActiveCampaign\Models\ContactTagModel;
 use Tests\TestCase;
 
 class ContactTest extends TestCase
@@ -91,5 +92,27 @@ class ContactTest extends TestCase
         $fieldValues = Contact::getFieldValues($contact);
 
         $this->assertIsArray($fieldValues);
+    }
+
+    public function testAddTagToContact()
+    {
+        try {
+            $contact = Contact::findById('56369');
+            $contactTag = Contact::addTagToContact($contact, '70');
+            $this->assertTrue($contactTag instanceof ContactTagModel);
+        } catch (\Exception $e) {
+            $this->assertFalse(false, $e->getMessage());
+        }
+
+    }
+
+    public function testRemoveTagToContact()
+    {
+        try {
+            $response = Contact::removeTagToContact('36766');
+            $this->assertTrue($response);
+        } catch (\Exception $e) {
+            $this->assertFalse(false, $e->getMessage());
+        }
     }
 }
