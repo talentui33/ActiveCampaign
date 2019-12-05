@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class TagTest extends TestCase
 {
-    public function testGetAllTags()
+    public function testGetAllTags(): void
     {
         try {
             $tags = Tag::getAll();
@@ -20,7 +20,7 @@ class TagTest extends TestCase
         }
     }
 
-    public function testSearchTagByName()
+    public function testSearchTagByName(): void
     {
         $tagNameValue = 'New Candidate';
 
@@ -32,7 +32,7 @@ class TagTest extends TestCase
         }
     }
 
-    public function testGetTagById()
+    public function testGetTagById(): void
     {
         try {
             $tag = Tag::getTagById('1');

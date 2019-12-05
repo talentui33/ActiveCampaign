@@ -74,7 +74,7 @@ class DealTest extends TestCase
         Contact::delete($contact->id);
     }
 
-    public function testUpdateDeal()
+    public function testUpdateDeal(): void
     {
         $user = User::findByEmail($this->userEmail);
         $newContact = ContactModel::create([

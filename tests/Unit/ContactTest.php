@@ -86,7 +86,7 @@ class ContactTest extends TestCase
         }
     }
 
-    public function testGetFieldValues()
+    public function testGetFieldValues(): void
     {
         $contact = Contact::findById('56369');
         $fieldValues = Contact::getFieldValues($contact);
@@ -94,7 +94,7 @@ class ContactTest extends TestCase
         $this->assertIsArray($fieldValues);
     }
 
-    public function testAddTagToContact()
+    public function testAddTagToContact(): void
     {
         try {
             $contact = Contact::findById('56369');
@@ -106,7 +106,7 @@ class ContactTest extends TestCase
 
     }
 
-    public function testRemoveTagToContact()
+    public function testRemoveTagToContact(): void
     {
         try {
             $response = Contact::removeTagToContact('36766');

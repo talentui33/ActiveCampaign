@@ -106,7 +106,7 @@ class Contact
         return ContactModel::create($responseData['contact']);
     }
 
-    public static function getFieldValues(ContactModel $contact)
+    public static function getFieldValues(ContactModel $contact): array
     {
         try {
             $client = new HttpClient();
