@@ -71,7 +71,7 @@ class Field
                 strtoupper($action)
             );
 
-            return $response->getStatusCode() == '200' ? true : false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $exception) {
             throw $exception;
         }
