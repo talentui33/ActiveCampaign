@@ -140,11 +140,7 @@ class Contact
         try {
             $client = new HttpClient();
             $response = $client->delete(self::$contactTagUrl . "/$contactTagId");
-            if ($response->getStatusCode() == 200) {
-                return true;
-            }
-
-            return false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $exception) {
             throw $exception;
         }
