@@ -13,28 +13,28 @@ class FieldTest extends TestCase
 {
     private static $PER_TAG = 'PROFILE_URL';
 
-    public function testGetAllFields()
+    public function testGetAllFields(): void
     {
         $fields = Field::getAll();
 
         $this->assertIsArray($fields);
     }
 
-    public function testGeAllFieldByPerStag()
+    public function testGeAllFieldByPerStag(): void
     {
         $contactField = Field::getByPerStag(self::$PER_TAG);
 
         $this->assertTrue($contactField instanceof FieldModel || $contactField === null);
     }
 
-    public function testGetAllFieldValues()
+    public function testGetAllFieldValues(): void
     {
         $fieldValues = Field::getAllFieldValues();
 
         $this->assertIsArray($fieldValues);
     }
 
-    public function testUpdateFieldValues()
+    public function testUpdateFieldValues(): void
     {
         try {
             $value = 'New value for testing 2';

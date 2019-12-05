@@ -1,8 +1,9 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 namespace TalentuI33\ActiveCampaign;
 
 use TalentuI33\ActiveCampaign\Models\ContactModel;
+use TalentuI33\ActiveCampaign\Models\ContactTagModel;
 use TalentuI33\ActiveCampaign\Providers\ContactProvider;
 use TalentuI33\ActiveCampaign\Providers\FieldValeProvider;
 use TalentuI33\ActiveCampaign\Services\HttpClient;
@@ -12,6 +13,7 @@ class Contact
     private static $url = 'contacts';
     private static $typeRequest = 'contact';
     private static $fieldValuesUrl = 'fieldValues';
+    private static $contactTagUrl = 'contactTags';
 
     public static function add(ContactModel $contact): ContactModel
     {
@@ -104,7 +106,7 @@ class Contact
         return ContactModel::create($responseData['contact']);
     }
 
-    public static function getFieldValues(ContactModel $contact)
+    public static function getFieldValues(ContactModel $contact): array
     {
         try {
             $client = new HttpClient();
@@ -116,5 +118,31 @@ class Contact
         }
 
         return FieldValeProvider::createFromString($response->getBody());
+    }
+
+    public static function addTagToContact(ContactModel $contact, string $tagId): ?ContactTagModel
+    {
+        try {
+            $client = new HttpClient();
+            $response = $client->postOrPut(self::$contactTagUrl, 'contactTag', [
+                "contact" => $contact->id,
+                "tag" => $tagId
+            ]);
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+
+        return ContactTagModel::createFromString($response->getBody());
+    }
+
+    public static function removeTagToContact(string $contactTagId): bool
+    {
+        try {
+            $client = new HttpClient();
+            $response = $client->delete(self::$contactTagUrl . "/$contactTagId");
+            return $response->getStatusCode() === 200;
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
     }
 }

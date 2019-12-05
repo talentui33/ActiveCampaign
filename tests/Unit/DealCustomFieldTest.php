@@ -59,7 +59,7 @@ class DealCustomFieldTest extends TestCase
         Contact::delete($contact->id);
     }
 
-    public function testBulkCreateDealCustomFieldValue()
+    public function testBulkCreateDealCustomFieldValue(): void
     {
         $user = User::findByEmail($this->userEmail);
         $newContact = ContactModel::create([
@@ -100,7 +100,7 @@ class DealCustomFieldTest extends TestCase
         Contact::delete($contact->id);
     }
 
-    public function testGetAllCustomFieldByDeal()
+    public function testGetAllCustomFieldByDeal(): void
     {
         $user = User::findByEmail($this->userEmail);
         $newContact = ContactModel::create([
@@ -144,7 +144,7 @@ class DealCustomFieldTest extends TestCase
         Contact::delete($contact->id);
     }
 
-    public function testBulkUpdateDealCustomFieldValue()
+    public function testBulkUpdateDealCustomFieldValue(): void
     {
         $user = User::findByEmail($this->userEmail);
         $newContact = ContactModel::create([
