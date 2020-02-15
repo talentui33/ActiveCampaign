@@ -44,7 +44,7 @@ class Deal
             if (!isset($responseData['deal'])) {
                 return null;
             }
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             throw $exception;
         }
         return DealModel::create($responseData['deal']);
@@ -65,6 +65,20 @@ class Deal
         }
 
         return DealModel::createFromString($response->getBody());
+    }
+
+    public static function deleteDeal(DealModel $deal): bool
+    {
+        try {
+            $client = new HttpClient();
+            $response = $client->delete(
+                self::$url . "/{$deal->id}"
+            );
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+
+        return true;
     }
 
     private static function makeDealData(DealModel $deal): array
