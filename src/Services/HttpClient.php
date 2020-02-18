@@ -23,6 +23,7 @@ class HttpClient
     public function get(string $uri, array $params = []): Response
     {
         try {
+            sleep(2);
             return $this->client->request('GET', $uri, [
                 'query' => $params
             ]);
@@ -39,7 +40,7 @@ class HttpClient
             } else {
                 $data = $params;
             }
-
+            sleep(2);
             return $this->client->request(strtoupper($action), $uri, [
                 "{$requestOption}" => $data
             ]);
@@ -51,6 +52,7 @@ class HttpClient
     public function delete(string $uri): Response
     {
         try {
+            sleep(2);
             return $this->client->request('DELETE', $uri);
         } catch (GuzzleException $e) {
             throw $e;
