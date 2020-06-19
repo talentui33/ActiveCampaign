@@ -16,16 +16,15 @@ class HttpClient
     {
         $this->client = new Client([
             'base_uri' => config('activecampaign.api_url'),
-            'headers' => ['Api-Token' => config('activecampaign.api_key')]
+            'headers'  => ['Api-Token' => config('activecampaign.api_key')],
         ]);
     }
 
     public function get(string $uri, array $params = []): Response
     {
         try {
-            sleep(2);
             return $this->client->request('GET', $uri, [
-                'query' => $params
+                'query' => $params,
             ]);
         } catch (GuzzleException $e) {
             throw $e;
@@ -40,9 +39,9 @@ class HttpClient
             } else {
                 $data = $params;
             }
-            sleep(2);
+
             return $this->client->request(strtoupper($action), $uri, [
-                "{$requestOption}" => $data
+                "{$requestOption}" => $data,
             ]);
         } catch (GuzzleException $e) {
             throw $e;
@@ -52,7 +51,6 @@ class HttpClient
     public function delete(string $uri): Response
     {
         try {
-            sleep(2);
             return $this->client->request('DELETE', $uri);
         } catch (GuzzleException $e) {
             throw $e;
