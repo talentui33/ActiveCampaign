@@ -32,9 +32,4 @@ class TagModel
         $tagObject = json_decode($metaData, true);
         return self::create($tagObject['tags']);
     }
-
-    public function validate(Validator)
-    {
-
-    }
 }
