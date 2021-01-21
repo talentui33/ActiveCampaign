@@ -14,7 +14,6 @@ class ContactTest extends TestCase
     public function testGetAllContacts(): void
     {
         $contacts = Contact::getAll();
-        dump($contacts);
         $this->assertTrue(count($contacts) >= 0);
     }
 
@@ -29,13 +28,28 @@ class ContactTest extends TestCase
 
         $contact = Contact::add($newContact);
         $this->assertTrue($newContact->email === $contact->email);
+
+        $response = Contact::delete($contact->id);
+        $this->assertJson($response);
     }
 
     public function testFindContactByEmail(): void
     {
-        $contact = Contact::findByEmail('test.email@test.com');
+        $newContact = ContactModel::create([
+            'firstName' => 'First Name Test',
+            'lastName' => 'Last Name Test',
+            'email' => 'test.email@test.com',
+            'phone' => '3004672965'
+        ]);
+
+        $contactAdded = Contact::add($newContact);
+
+        $contact = Contact::findByEmail($contactAdded->email);
         if ($contact) {
-            $this->assertTrue($contact->email == 'test.email@test.com');
+            $this->assertTrue($contact->email == $contactAdded->email);
+
+            $response = Contact::delete($contact->id);
+            $this->assertJson($response);
         }
     }
 
@@ -59,7 +73,16 @@ class ContactTest extends TestCase
 
     public function testUpdateContact(): void
     {
-        $contact = Contact::findByEmail('test.email@test.com');
+        $newContact = ContactModel::create([
+            'firstName' => 'First Name Test',
+            'lastName' => 'Last Name Test',
+            'email' => 'test.email@test.com',
+            'phone' => '3004672965'
+        ]);
+
+        $contactAdded = Contact::add($newContact);
+
+        $contact = Contact::findByEmail($contactAdded->email);
 
         if ($contact) {
             $contact->firstName = 'First Name Test Edited';
@@ -69,6 +92,9 @@ class ContactTest extends TestCase
             $contact = Contact::update($contact);
 
             $this->assertTrue($contact->firstName === 'First Name Test Edited');
+
+            $response = Contact::delete($contact->id);
+            $this->assertJson($response);
         } else {
             $this->assertTrue(false, 'Email not found on Active Campaign API');
         }
@@ -76,10 +102,18 @@ class ContactTest extends TestCase
 
     public function testDeleteContact(): void
     {
-        $contact = Contact::findByEmail('test.email@test.com');
+        $newContact = ContactModel::create([
+            'firstName' => 'First Name Test',
+            'lastName' => 'Last Name Test',
+            'email' => 'test.email@test.com',
+            'phone' => '3004672965'
+        ]);
+
+        $contactAdded = Contact::add($newContact);
+
+        $contact = Contact::findByEmail($contactAdded->email);
         if ($contact) {
             $response = Contact::delete($contact->id);
-
             $this->assertJson($response);
         } else {
             $this->assertTrue(false, 'Data not Found on API');
@@ -88,16 +122,28 @@ class ContactTest extends TestCase
 
     public function testGetFieldValues(): void
     {
-        $contact = Contact::findById('56369');
+        $newContact = ContactModel::create([
+            'firstName' => 'First Name Test',
+            'lastName' => 'Last Name Test',
+            'email' => 'test.email@test.com',
+            'phone' => '3004672965'
+        ]);
+
+        $contactAdded = Contact::add($newContact);
+
+        $contact = Contact::findById($contactAdded->id);
         $fieldValues = Contact::getFieldValues($contact);
 
         $this->assertIsArray($fieldValues);
+
+        $response = Contact::delete($contact->id);
+        $this->assertJson($response);
     }
 
     public function testAddTagToContact(): void
     {
         try {
-            $contact = Contact::findById('56369');
+            $contact = Contact::findById('16');
             $contactTag = Contact::addTagToContact($contact, '70');
             $this->assertTrue($contactTag instanceof ContactTagModel);
         } catch (\Exception $e) {

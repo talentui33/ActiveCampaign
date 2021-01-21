@@ -51,8 +51,8 @@ class DealCustomFieldTest extends TestCase
 
         $deal = Deal::add($newDeal);
 
-        $dealCustomFieldOffer = DealCustomField::findByPersonalization('DEAL_OFERTA');
-        $dealCustomFieldDatum = DealCustomField::createCustomFiledValue($deal, $dealCustomFieldOffer, 'Test create value for DEAL_OFERTA');
+        $dealCustomFieldOffer = DealCustomField::findByPersonalization('DEAL_RESPONDIO_CUESTIONARIOS_PREENTREVISTA');
+        $dealCustomFieldDatum = DealCustomField::createCustomFiledValue($deal, $dealCustomFieldOffer, '4');
 
         $this->assertTrue($dealCustomFieldDatum instanceof DealCustomFieldDatumModel || $dealCustomFieldDatum === null);
 
@@ -80,21 +80,21 @@ class DealCustomFieldTest extends TestCase
 
         $deal = Deal::add($newDeal);
 
-        $customFieldDatums = [];
+        $customFieldDatum = [];
 
         $dealCustomFields = DealCustomField::getAll();
 
         foreach ($dealCustomFields as $dealCustomField) {
-            if ($dealCustomField->personalization !== 'DEAL_JOB_INTERVIEW_DATE') {
+            if ($dealCustomField->personalization === 'DEAL_RESPONDIO_CUESTIONARIOS_PREENTREVISTA') {
                 $dealCustomFieldDatum = new DealCustomFieldDatumModel();
                 $dealCustomFieldDatum->dealId = $deal->id;
                 $dealCustomFieldDatum->customFieldId = $dealCustomField->id;
-                $dealCustomFieldDatum->fieldValue = "Test Bulk for {$dealCustomField->personalization}";
-                array_push($customFieldDatums, $dealCustomFieldDatum);
+                $dealCustomFieldDatum->fieldValue = "4";
+                array_push($customFieldDatum, $dealCustomFieldDatum);
             }
         }
 
-        $newDealCustomFieldDatum = DealCustomField::createBulkCustomFieldValue($customFieldDatums);
+        $newDealCustomFieldDatum = DealCustomField::createBulkCustomFieldValue($customFieldDatum);
         $this->assertTrue($newDealCustomFieldDatum || $newDealCustomFieldDatum === null);
 
         Contact::delete($contact->id);
@@ -121,25 +121,25 @@ class DealCustomFieldTest extends TestCase
 
         $deal = Deal::add($newDeal);
 
-        $customFieldDatums = [];
+        $customFieldDatum = [];
 
         $dealCustomFields = DealCustomField::getAll();
 
         foreach ($dealCustomFields as $dealCustomField) {
-            if ($dealCustomField->personalization !== 'DEAL_JOB_INTERVIEW_DATE') {
+            if ($dealCustomField->personalization === 'DEAL_RESPONDIO_CUESTIONARIOS_PREENTREVISTA') {
                 $dealCustomFieldDatum = new DealCustomFieldDatumModel();
                 $dealCustomFieldDatum->dealId = $deal->id;
                 $dealCustomFieldDatum->customFieldId = $dealCustomField->id;
-                $dealCustomFieldDatum->fieldValue = "Test Bulk for {$dealCustomField->personalization}";
-                array_push($customFieldDatums, $dealCustomFieldDatum);
+                $dealCustomFieldDatum->fieldValue = "3";
+                array_push($customFieldDatum, $dealCustomFieldDatum);
             }
         }
 
-        $newDealCustomFieldDatum = DealCustomField::createBulkCustomFieldValue($customFieldDatums);
+        $newDealCustomFieldDatum = DealCustomField::createBulkCustomFieldValue($customFieldDatum);
         $this->assertTrue($newDealCustomFieldDatum || $newDealCustomFieldDatum === null);
 
-        $customFieldDatums = DealCustomField::getCustomFieldDataByDeal($deal);
-        $this->assertIsArray($customFieldDatums);
+        $customFieldDatum = DealCustomField::getCustomFieldDataByDeal($deal);
+        $this->assertIsArray($customFieldDatum);
 
         Contact::delete($contact->id);
     }
@@ -165,32 +165,32 @@ class DealCustomFieldTest extends TestCase
 
         $deal = Deal::add($newDeal);
 
-        $customFieldDatums = [];
+        $customFieldDatum = [];
 
         $dealCustomFields = DealCustomField::getAll();
 
         foreach ($dealCustomFields as $dealCustomField) {
-            if ($dealCustomField->personalization !== 'DEAL_JOB_INTERVIEW_DATE') {
+            if ($dealCustomField->personalization === 'DEAL_RESPONDIO_CUESTIONARIOS_PREENTREVISTA') {
                 $dealCustomFieldDatum = new DealCustomFieldDatumModel();
                 $dealCustomFieldDatum->dealId = $deal->id;
                 $dealCustomFieldDatum->customFieldId = $dealCustomField->id;
-                $dealCustomFieldDatum->fieldValue = "Test Bulk for {$dealCustomField->personalization}";
-                array_push($customFieldDatums, $dealCustomFieldDatum);
+                $dealCustomFieldDatum->fieldValue = "4";
+                array_push($customFieldDatum, $dealCustomFieldDatum);
             }
         }
 
-        $newDealCustomFieldDatum = DealCustomField::createBulkCustomFieldValue($customFieldDatums);
+        $newDealCustomFieldDatum = DealCustomField::createBulkCustomFieldValue($customFieldDatum);
         $this->assertTrue($newDealCustomFieldDatum || $newDealCustomFieldDatum === null);
 
-        $fieldDatums = DealCustomField::getCustomFieldDataByDeal($deal);
+        $fieldDatum = DealCustomField::getCustomFieldDataByDeal($deal);
 
-        foreach ($fieldDatums as $fieldDatum) {
-            if ($fieldDatum->customFieldId == 1 || $fieldDatum->customFieldId == 4) {
-                $fieldDatum->fieldValue .= ' Updated';
+        foreach ($fieldDatum as $fieldData) {
+            if ($fieldData->customFieldId == 1 || $fieldData->customFieldId == 4) {
+                $fieldData->fieldValue .= ' Updated';
             }
         }
 
-        DealCustomField::updateBulkCustomFieldValue($fieldDatums);
+        DealCustomField::updateBulkCustomFieldValue($fieldDatum);
 
         Contact::delete($contact->id);
     }
