@@ -36,14 +36,13 @@ class DealTest extends TestCase
         $newDeal = DealModel::create([
             'contact' => $contact->id,
             'owner' => $user->id,
-            'stage' => 1,
+            'stage' => 4,
             'title' => 'Test Deal'
         ]);
 
+
         $deal = Deal::add($newDeal);
-
         $this->assertTrue($deal->title === $newDeal->title);
-
         Contact::delete($contact->id);
     }
 
@@ -62,7 +61,7 @@ class DealTest extends TestCase
         $newDeal = DealModel::create([
             'contact' => $contact->id,
             'owner' => $user->id,
-            'stage' => 1,
+            'stage' => 4,
             'title' => 'Test Deal Find'
         ]);
 
@@ -89,35 +88,35 @@ class DealTest extends TestCase
         $newDeal = DealModel::create([
             'contact' => $contact->id,
             'owner' => $user->id,
-            'stage' => 1,
+            'stage' => 4,
             'title' => 'Test Deal Find'
         ]);
 
         $deal = Deal::add($newDeal);
 
-        $customFieldDatums = [];
+        $customFieldDatum = [];
         $dealCustomFields = DealCustomField::getAll();
 
         foreach ($dealCustomFields as $dealCustomField) {
-            if ($dealCustomField->personalization !== 'DEAL_JOB_INTERVIEW_DATE') {
+            if ($dealCustomField->personalization === 'DEAL_HORA_DE_ACTUALIZACION') {
                 $dealCustomFieldDatum = new DealCustomFieldDatumModel();
                 $dealCustomFieldDatum->dealId = $deal->id;
                 $dealCustomFieldDatum->customFieldId = $dealCustomField->id;
-                $dealCustomFieldDatum->fieldValue = "Test Bulk for {$dealCustomField->personalization}";
-                array_push($customFieldDatums, $dealCustomFieldDatum);
+                $dealCustomFieldDatum->fieldValue = "2";
+                array_push($customFieldDatum, $dealCustomFieldDatum);
             }
         }
 
-        DealCustomField::createBulkCustomFieldValue($customFieldDatums);
-        $fieldDatums = DealCustomField::getCustomFieldDataByDeal($deal);
+        DealCustomField::createBulkCustomFieldValue($customFieldDatum);
+        $fieldDatum = DealCustomField::getCustomFieldDataByDeal($deal);
 
-        foreach ($fieldDatums as $fieldDatum) {
-            if ($fieldDatum->customFieldId == $this->DEAL_CAMPAIGN) {
-                $fieldDatum->fieldValue .= ' Updated';
+        foreach ($fieldDatum as $fieldData) {
+            if ($fieldData->customFieldId == $this->DEAL_CAMPAIGN) {
+                $fieldData->fieldValue .= ' Updated';
             }
         }
 
-        DealCustomField::updateBulkCustomFieldValue($fieldDatums);
+        DealCustomField::updateBulkCustomFieldValue($fieldDatum);
 
         $deal->status = $this->DEAL_WON;
         $dealUpdated = Deal::updateDeal($deal);

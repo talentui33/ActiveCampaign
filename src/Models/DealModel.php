@@ -10,6 +10,7 @@ class DealModel
     public $contact;
     public $description = null;
     public $currency = 'cop';
+    public $group = null;
     public $owner = null;
     public $percent = null;
     public $stage = null;
@@ -29,6 +30,10 @@ class DealModel
 
         if(isset($metaData['currency'])) {
             $meta->currency = $metaData['currency'];
+        }
+
+        if(isset($metaData['group'])){
+            $meta->group = $metaData['group'];
         }
 
         $meta->owner = $metaData['owner'] ?? '';

@@ -87,6 +87,7 @@ class Deal
             'contact' => $deal->contact,
             'description' => $deal->description,
             'currency' => strtolower($deal->currency),
+            'group' => $deal->group,
             'owner' => $deal->owner,
             'percent' => $deal->percent,
             'stage' => $deal->stage,
