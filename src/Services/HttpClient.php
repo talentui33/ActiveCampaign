@@ -6,6 +6,7 @@ namespace TalentuI33\ActiveCampaign\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
 
 class HttpClient
@@ -52,6 +53,23 @@ class HttpClient
     {
         try {
             return $this->client->request('DELETE', $uri);
+        } catch (GuzzleException $e) {
+            throw $e;
+        }
+    }
+
+    public function postOrPutAsync(string $uri, string $type = null, array $params = [], string $action = 'POST', string $requestOption = 'json'): PromiseInterface
+    {
+        try {
+            if (isset($type)) {
+                $data = ["{$type}" => $params];
+            } else {
+                $data = $params;
+            }
+
+            return $this->client->requestAsync(strtoupper($action), $uri, [
+                "{$requestOption}" => $data,
+            ]);
         } catch (GuzzleException $e) {
             throw $e;
         }
